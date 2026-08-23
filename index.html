@@ -207,8 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             checkAircraft(apiKey);
             intervalId = setInterval(() => checkAircraft(apiKey), POLL_INTERVAL_MS);
-            const apiKey = apiKeyInput.value.trim();
-// ... validation logic ...
+            
 
 // Save it for next time
 localStorage.setItem("adsbApiKey", apiKey); 
