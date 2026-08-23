@@ -137,7 +137,7 @@
 
         <div class="input-group">
             <label for="apiKey">RapidAPI Key</label>
-            <input type="text" id="apiKey" value="5f3d54fa7cmsh7f10ba2c8156829p13d163jsnc369b6c2f06c">
+            <input type="text" id="apiKey" placeholder="Enter RapidAPI Key">
         </div>
 
         <button id="startBtn">Enable Alerts & Start</button>
@@ -154,6 +154,14 @@
     </div>
 
     <script>
+        // On page load, check if we saved a key previously
+document.addEventListener("DOMContentLoaded", () => {
+    const savedKey = localStorage.getItem("adsbApiKey");
+    if (savedKey) {
+        document.getElementById("apiKey").value = savedKey;
+    }
+});
+        
         const TARGET_HEX = '7c10ad'; // Corrected ICAO Hex for VH-DKV
         const TARGET_ALTITUDE = 10000;
         const POLL_INTERVAL_MS = 15000; 
@@ -199,6 +207,12 @@
             
             checkAircraft(apiKey);
             intervalId = setInterval(() => checkAircraft(apiKey), POLL_INTERVAL_MS);
+            const apiKey = apiKeyInput.value.trim();
+// ... validation logic ...
+
+// Save it for next time
+localStorage.setItem("adsbApiKey", apiKey); 
+            
         });
 
         async function checkAircraft(apiKey) {
