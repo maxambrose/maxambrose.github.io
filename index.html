@@ -230,8 +230,13 @@
                 const data = await response.json();
                 rawOutput.innerText = JSON.stringify(data, null, 2);
                 
-                // Safe optional chaining to extract aircraft data
-                const aircraft = data?.ac?.[0];
+                // FIXED: Handle both flat JSON objects and `ac` wrapped objects
+                let aircraft = null;
+                if (data && data.ac && data.ac.length > 0) {
+                    aircraft = data.ac[0]; // If the API wraps it in an 'ac' array
+                } else if (data && data.hex) {
+                    aircraft = data;       // If the API returns a flat object (like your debug output)
+                }
                 
                 if (aircraft) {
                     let currentAlt = 0;
